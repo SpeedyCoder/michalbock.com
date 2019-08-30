@@ -1,9 +1,14 @@
 version: '3'
 services:
   site:
-    image: quay.io/speedycoder/michalbock.com
+    image: quay.io/speedycoder/michalbock.com:latest
     restart: always
     expose:
       - "80"
     ports:
       - "80:8080"
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

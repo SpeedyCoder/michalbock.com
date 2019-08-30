@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/urfave/cli"
 )
@@ -23,12 +25,34 @@ func main() {
 			Value:  "hugo/public",
 		},
 	}
-	app.Action = func(c *cli.Context) error {
-		http.Handle("/", http.FileServer(http.Dir(c.String("root-dir"))))
-		log.Printf("Serving %s on HTTP port: %v\n", c.String("root-dir"), c.Int("port"))
-		return http.ListenAndServe(fmt.Sprintf(":%v", c.Int("port")), nil)
-	}
-	if err := app.Run(os.Args); err != nil {
+	app.Action = run
+
+	if err := app.Run(os.Args); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
+}
+
+func run(c *cli.Context) error {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/medium", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "https://medium.com/@michal.bock", http.StatusFound)
+	})
+	mux.Handle("/", http.FileServer(http.Dir(c.String("root-dir"))))
+
+	server := &http.Server{
+		Addr:    fmt.Sprintf(":%v", c.Int("port")),
+		Handler: mux,
+	}
+	go func() {
+		sCh := make(chan os.Signal, 1)
+		signal.Notify(sCh, os.Interrupt, syscall.SIGTERM)
+		<-sCh
+		if err := server.Close(); err != nil {
+			log.Printf("error when closing the server: %s", err)
+		}
+	}()
+
+	log.Printf("Serving %s on HTTP port: %v\n", c.String("root-dir"), c.Int("port"))
+
+	return server.ListenAndServe()
 }

@@ -37,6 +37,9 @@ func run(c *cli.Context) error {
 	mux.HandleFunc("/medium", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "https://medium.com/@michal.bock", http.StatusFound)
 	})
+	mux.HandleFunc("/goroutines", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "https://medium.com/@michal.bock/managing-groups-of-gorutines-in-go-ee7523e3eaca?sk=edc0cd14d1c35312f82cf9ada2df0633", http.StatusFound)
+	})
 	mux.Handle("/", http.FileServer(http.Dir(c.String("root-dir"))))
 
 	server := &http.Server{

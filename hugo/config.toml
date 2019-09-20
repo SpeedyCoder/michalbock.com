@@ -46,6 +46,11 @@ pygmentscodefencesguesssyntax = true
     icon = "fab fa-medium-m fa-3x"
     weight = 3
     url = "https://medium.com/@michal.bock"
+[[params.social]]
+    name = "Twitter"
+    icon = "fab fa-twitter fa-3x"
+    weight = 3
+    url = "https://twitter.com/michal_bock"
 
 # Menu links
 [[menu.main]]

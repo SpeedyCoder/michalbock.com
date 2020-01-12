@@ -4,8 +4,8 @@ slug = "about"
 +++
 
 I'm a backend developer currently working at [Utility Warehouse](https://www.utilitywarehouse.co.uk). 
-There spent I most of my time building micro-services in [go](https://golang.org) using [gRPC](https://grpc.io)
-and deploying them on [Kubernetes](https://kubernetes.io). Lots of our services are event driven, so we have build
+There I spend most of my time building micro-services in [go](https://golang.org) using [gRPC](https://grpc.io)
+and deploying them on [Kubernetes](https://kubernetes.io). Lots of our services are event driven, so we have built
 some nice tools to interact with various event streams like [Kafka](https://kafka.apache.org) and [NATS streaming](https://nats.io). 
 Go check them out on our [GitHub](https://github.com/uw-labs).
 

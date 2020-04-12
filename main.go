@@ -20,8 +20,7 @@ var (
 	staticDir, certsDir string
 
 	siteURLs = map[string]bool{
-		"michalbock.com":     true,
-		"www.michalbock.com": true,
+		"michalbock.com": true,
 	}
 )
 
@@ -117,9 +116,7 @@ func newSiteServeMux() *http.ServeMux {
 func newHTTPSRedirectServeMux() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		url := r.URL
-		url.Scheme = "https"
-		url.Host = url.Hostname() + ":443"
+		r.URL.Scheme, r.URL.Host = "https", r.Host
 		http.Redirect(w, r, r.URL.String(), http.StatusFound)
 	})
 	return mux

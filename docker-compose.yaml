@@ -3,12 +3,7 @@ services:
   site:
     image: quay.io/speedycoder/michalbock.com:latest
     restart: always
-    expose:
-      - "80"
-      - "443"
-    ports:
-      - "80:80"
-      - "443:443"
+    network_mode: host
     volumes:
       - certs:/certs
   watchtower:

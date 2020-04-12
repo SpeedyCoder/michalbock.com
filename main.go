@@ -31,13 +31,13 @@ func main() {
 		cli.IntFlag{
 			Name:        "http-port",
 			EnvVar:      "HTTP_PORT",
-			Value:       8080,
+			Value:       80,
 			Destination: &httpPort,
 		},
 		cli.StringFlag{
 			Name:        "static-dir",
 			EnvVar:      "STATIC_DIR",
-			Value:       "hugo/public",
+			Value:       "/public",
 			Destination: &staticDir,
 		},
 		cli.BoolFlag{

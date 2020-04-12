@@ -28,4 +28,3 @@ COPY --from=build /build/run-server /bin/run-server
 COPY --from=build /build/hugo/public /public
 
 ENTRYPOINT [ "run-server" ]
-CMD ["--root-dir=/public"]

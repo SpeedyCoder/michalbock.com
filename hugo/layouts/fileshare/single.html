@@ -1,0 +1,32 @@
+{{ define "content" }}
+    <style>
+        .form-input {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1.2rem;
+            border: .05rem solid #212121;
+            border-radius: 0.5rem;
+            color: #212121;
+            background-color: #fafafa;
+            font-family: Merriweather,Georgia,serif;
+            font-weight: 300;
+        }
+        .form-submit {
+            color: #fafafa;
+            background-color: #212121;
+        }
+        .form-submit:hover {
+            background-color: #0e54a3;
+        }
+
+    </style>
+    <section class="container centered">
+        <form enctype="multipart/form-data" action="/files/upload" method="post">
+            <input class="form-input" type="text" name="name" placeholder="Name" required>
+            <input class="form-input" type="file" name="file" required>
+            <input class="form-input" type="password" name="password" placeholder="Password" required>
+            <input class="form-input form-submit" type="submit" value="Upload">
+        </form>
+    </section>
+{{ end }}

@@ -1,6 +1,6 @@
 baseURL = "/"
 languageCode = "en-us"
-title = "michalbock.com"
+title = "MichalBock.com"
 theme = "coder"
 
 paginate = 20
@@ -61,3 +61,7 @@ pygmentscodefencesguesssyntax = true
     name = "About"
     weight = 2
     url = "/about/"
+[[menu.main]]
+    name = "File Share"
+    weight = 3
+    url = "/fileshare/"

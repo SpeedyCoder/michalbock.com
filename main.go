@@ -9,15 +9,20 @@ import (
 	"os"
 	"time"
 
+	"github.com/SpeedyCoder/michalbock.com/internal/routes"
+	"github.com/SpeedyCoder/michalbock.com/internal/store"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/urfave/cli"
 	"golang.org/x/crypto/acme/autocert"
 )
 
 var (
-	disableHTTPS        bool
-	httpPort            int
-	staticDir, certsDir string
+	disableHTTPS bool
+	httpPort     int
+	staticDir    string
+	certsDir     string
+	storeFile    string
+	password     string
 
 	siteURLs = map[string]bool{
 		"michalbock.com": true,
@@ -50,15 +55,39 @@ func main() {
 			Value:       "/certs",
 			Destination: &certsDir,
 		},
+		cli.StringFlag{
+			Name:        "store-file",
+			EnvVar:      "STORE_FILE",
+			Value:       "/data/bbolt.db",
+			Destination: &storeFile,
+		},
+		cli.StringFlag{
+			Name:        "password",
+			EnvVar:      "PASSWORD",
+			FilePath:    "/data/password.txt",
+			Required:    true,
+			Destination: &password,
+		},
 	}
 	app.Action = func(*cli.Context) error {
+		db, err := store.New(storeFile)
+		if err != nil {
+			return err
+		}
+		defer db.Close()
+
+		handler := routes.Handler(routes.Config{
+			StaticDir: staticDir,
+			Store:     db,
+			Password:  []byte(password),
+		})
 		if disableHTTPS {
-			return runInsecure()
+			return runInsecure(handler)
 		}
 		if err := os.MkdirAll(certsDir, os.ModePerm); err != nil {
 			return err
 		}
-		return runSecure()
+		return runSecure(handler)
 	}
 
 	if err := app.Run(os.Args); err != nil && err != http.ErrServerClosed {
@@ -66,7 +95,7 @@ func main() {
 	}
 }
 
-func runSecure() error {
+func runSecure(handler http.Handler) error {
 	manager := &autocert.Manager{
 		Prompt: autocert.AcceptTOS,
 		HostPolicy: func(ctx context.Context, host string) error {
@@ -87,30 +116,17 @@ func runSecure() error {
 	}()
 
 	log.Printf("Serving %s over HTTPS\n", staticDir)
-	server := newHTTPServer(":443", newSiteServeMux())
+	server := newHTTPServer(":443", handler)
 	server.TLSConfig = &tls.Config{GetCertificate: manager.GetCertificate}
 
 	return server.ListenAndServeTLS("", "")
 }
 
-func runInsecure() error {
+func runInsecure(handler http.Handler) error {
 	log.Printf("Serving %s on HTTP port: %v\n", staticDir, httpPort)
-	server := newHTTPServer(fmt.Sprintf(":%v", httpPort), newSiteServeMux())
+	server := newHTTPServer(fmt.Sprintf(":%v", httpPort), handler)
 
 	return server.ListenAndServe()
-}
-
-func newSiteServeMux() *http.ServeMux {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/medium", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "https://medium.com/@michal.bock", http.StatusFound)
-	})
-	mux.HandleFunc("/goroutines", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "https://medium.com/@michal.bock/managing-groups-of-gorutines-in-go-ee7523e3eaca?sk=edc0cd14d1c35312f82cf9ada2df0633", http.StatusFound)
-	})
-	mux.Handle("/", http.FileServer(http.Dir(staticDir)))
-
-	return mux
 }
 
 func newHTTPSRedirectServeMux() *http.ServeMux {

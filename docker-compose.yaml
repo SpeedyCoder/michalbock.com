@@ -6,6 +6,7 @@ services:
     network_mode: host
     volumes:
       - certs:/certs
+      - data:/data
   watchtower:
     image: containrrr/watchtower:latest
     restart: always
@@ -13,3 +14,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   certs: {}
+  data: {}

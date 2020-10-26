@@ -1,7 +1,7 @@
 # --------------------------------------------------------------------------------------------------
 # Build workspace
 # --------------------------------------------------------------------------------------------------
-FROM golang:1.14-alpine AS build
+FROM golang:alpine AS build
 
 ENV HUGO_VERSION=0.69.0
 ENV HUGO_BINARY=hugo_${HUGO_VERSION}_linux-64bit

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/SpeedyCoder/michalbock.com/internal/routes/filestore"
-
 	"github.com/SpeedyCoder/michalbock.com/internal/store"
 )
 

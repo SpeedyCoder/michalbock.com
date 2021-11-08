@@ -10,7 +10,7 @@ tags = [
 categories = [
     "Django",
     "Python",
-    "Development",
+    "Programming",
 ]
 externalLink = "https://medium.com/@michal.bock/fix-weird-exceptions-when-running-django-tests-f58def71b59a"
 +++

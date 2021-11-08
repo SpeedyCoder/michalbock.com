@@ -12,9 +12,9 @@ pygmentscodefencesguesssyntax = true
 
 [params]
     author = "Michal Bock"
-    info = "Backend Developer"
+    info = "Software Engineer"
     description = "Personal website of Michal Bock"
-    keywords = "blog,developer,personal"
+    keywords = "personal,blog,software,engineering"
     avatarurl = "images/michal.jpg"
 
     favicon_32 = "/img/favicon-32x32.png"

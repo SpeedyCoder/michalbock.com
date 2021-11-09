@@ -3,7 +3,7 @@
 # --------------------------------------------------------------------------------------------------
 FROM golang:alpine AS build
 
-ENV HUGO_VERSION=0.89.2
+ENV HUGO_VERSION=0.69.0
 ENV HUGO_BINARY=hugo_${HUGO_VERSION}_linux-64bit
 
 RUN apk update && apk add git

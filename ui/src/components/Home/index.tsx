@@ -13,7 +13,7 @@ export const Home: React.FC = () => (
                 boxSize='200px'
             />
             <Heading color="grey.900" as='h2' size='xl'>Michal Bock</Heading>
-            <Heading color="grey.900" as='h3' size='md' >Software Engineer</Heading>
+            <Heading color="grey.900" as='h3' size='md'>Software Engineer</Heading>
             <HStack spacing={3}>
                 <SocialLink url="https://github.com/SpeedyCoder/" icon={FaGithub}></SocialLink>
                 <SocialLink url="https://linkedin.com/in/michalbock/"
@@ -38,7 +38,7 @@ function SocialLink({url, icon}: linkData) {
             target="_blank"
             rel="noopener noreferrer"
         >
-            <Icon as={icon} boxSize={9} _hover={{color: "blue.500"}}/>
+            <Icon as={icon} boxSize={9}/>
         </Link>
     )
 }

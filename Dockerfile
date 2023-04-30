@@ -1,30 +1,28 @@
 # --------------------------------------------------------------------------------------------------
-# Build workspace
+# Build workspaces
 # --------------------------------------------------------------------------------------------------
+FROM node:18.16.0-alpine AS fe-build
+
+WORKDIR /ui
+
+ADD ./ui /ui
+
+RUN npm install
+RUN npm run build
+
 FROM golang:alpine AS build
-
-ENV HUGO_VERSION=0.69.0
-ENV HUGO_BINARY=hugo_${HUGO_VERSION}_linux-64bit
-
-RUN apk update && apk add git
-
-ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY}.tar.gz /usr/local/
-RUN tar xzf /usr/local/${HUGO_BINARY}.tar.gz -C /usr/local/bin/ \
-	&& rm /usr/local/${HUGO_BINARY}.tar.gz
 
 WORKDIR /build
 ADD . /build
 
-RUN git submodule update --init --recursive
-RUN cd hugo && hugo
-RUN CGO_ENABLED=0 go build -o run-server .
+RUN CGO_ENABLED=0 go build -ldflags='-s -w' -o run-server .
 
 # --------------------------------------------------------------------------------------------------
 # Runtime
 # --------------------------------------------------------------------------------------------------
 FROM alpine:latest
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates tzdata
 COPY --from=build /build/run-server /bin/run-server
-COPY --from=build /build/hugo/public /public
+COPY --from=fe-build /ui/build /public
 
 ENTRYPOINT [ "run-server" ]

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -68,9 +69,18 @@ func main() {
 	app.Action = func(*cli.Context) error {
 		db, err := store.New(storeFile)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to create store: %w", err)
 		}
 		defer db.Close()
+
+		handler, err := routes.Handler(routes.Config{
+			StaticDir: staticDir,
+			Store:     db,
+			Password:  []byte(password),
+		})
+		if err != nil {
+			return fmt.Errorf("failed to create handler: %w", err)
+		}
 
 		s := &server.Server{
 			Insecure: disableHTTPS,
@@ -78,11 +88,7 @@ func main() {
 			SiteURLs: siteURLs,
 			HTTPPort: httpPort,
 		}
-		return s.Run(routes.Handler(routes.Config{
-			StaticDir: staticDir,
-			Store:     db,
-			Password:  []byte(password),
-		}))
+		return s.Run(handler)
 	}
 
 	if err := app.Run(os.Args); err != nil && err != http.ErrServerClosed {

@@ -15,15 +15,8 @@ import {
 import {ColorModeSwitcher} from './ColorModeSwitcher'
 import {Link as RouteLink} from 'react-router-dom'
 import {FaBars} from "react-icons/fa"
-import {RootNode} from "../../generated/project_2610";
 
-type NavigationProps = {
-    flags: RootNode
-}
-
-export function Navigation({flags}: NavigationProps) {
-    const enableExample = flags.exampleFlag({}).get(false);
-
+export function Navigation() {
     return (
         <Box textAlign="center">
             <Flex h={16} alignItems='center' justifyContent='space-around'>
@@ -45,11 +38,6 @@ export function Navigation({flags}: NavigationProps) {
                                 <MenuItem as={RouteLink} to='/about'>
                                     About
                                 </MenuItem>
-                                {enableExample && (
-                                    <MenuItem as={RouteLink} to='/about'>
-                                        Example
-                                    </MenuItem>
-                                )}
                                 <MenuDivider/>
                                 <ColorModeSwitcher/>
                             </MenuList>

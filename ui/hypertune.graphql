@@ -1,6 +1,10 @@
 
 query InitQuery {
   root {
-    exampleFlag
+    posts {
+        date
+        link
+        text
+    }
   }
 }

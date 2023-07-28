@@ -18,7 +18,7 @@ export default function useHypertune() {
             hypertune
                 .root({
                     context: {
-                        user: { id: "test_id", name: "Test", email: "test@test.com" },
+                        language: 'en',
                     },
                 }),
         []

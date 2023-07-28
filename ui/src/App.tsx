@@ -19,10 +19,10 @@ export function App(){
                       gridTemplateRows={'60px 1fr 20px'}
                 >
                     <GridItem area={'header'}>
-                        <Navigation flags={flags} />
+                        <Navigation/>
                     </GridItem>
                     <GridItem area={'main'}>
-                        <Routes/>
+                        <Routes flags={flags} />
                     </GridItem>
                     <GridItem area={'footer'}>
                         <Heading as='h6' size='xs' color="grey.900">

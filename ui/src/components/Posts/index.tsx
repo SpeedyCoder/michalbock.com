@@ -1,51 +1,40 @@
 import * as React from "react"
 import {Box, Center, Grid, Heading, List, ListItem, Link, Text, HStack} from "@chakra-ui/react"
+import {RootNode, BlogPostNode} from "../../generated/project_2610";
 
-export const Posts = () => (
-    <Center>
-        <Grid>
-            <Heading as='h1' textAlign='left' mt={10} mb={5}>Posts</Heading>
-            <Box>
-                <List>
-                    <PostLink
-                        date='November 8, 2021'
-                        href='https://medium.com/@michal.bock/software-engineering-interviews-in-2021-37b644253527'
-                        text='Software Engineering Interviews in 2021'
-                    />
-                    <PostLink
-                        date='August 30, 2019'
-                        href='https://medium.com/swlh/managing-groups-of-gorutines-in-go-ee7523e3eaca'
-                        text='Managing Groups of Goroutines in Go'
-                    />
-                    <PostLink
-                        date='October 10, 2018'
-                        href='https://medium.com/@michal.bock/deploy-certificate-authority-service-on-kubernetes-21853c152ade'
-                        text='Deploying Certificate Authority Service on Kubernetes'
-                    />
-                    <PostLink
-                        date='May 14, 2018'
-                        href='https://medium.com/@michal.bock/fix-weird-exceptions-when-running-django-tests-f58def71b59a'
-                        text='Fix weird exceptions when running Django tests'
-                    />
-                </List>
-            </Box>
-        </Grid>
-    </Center>
-)
-
-type linkData = {
-    date: string;
-    href: string;
-    text: string;
+type PostsProps = {
+    flags: RootNode
 }
 
-function PostLink({date, href, text}: linkData) {
+export function Posts({flags}: PostsProps) {
+    const allPosts = flags.posts({}).map((post, index) => (
+        <PostLink key={index} post={post}/>
+    ));
+
+    return (
+        <Center>
+            <Grid>
+                <Heading as='h1' textAlign='left' mt={10} mb={5}>Posts</Heading>
+                <Box>
+                    <List>{allPosts}</List>
+                </Box>
+            </Grid>
+        </Center>
+    )
+}
+
+type PostLinkProps = {
+    post: BlogPostNode
+}
+
+
+function PostLink({post}: PostLinkProps) {
     return (
         <ListItem>
             <HStack justifyContent='space-between'>
-                <Text fontSize='xl'>{date}</Text>
-                <Link href={href} fontSize='xl'>
-                    <b>{text}</b>
+                <Text fontSize='xl'>{post.date({}).get('')}</Text>
+                <Link href={post.link({}).get('')} fontSize='xl'>
+                    <b>{post.text({}).get('')}</b>
                 </Link>
             </HStack>
         </ListItem>

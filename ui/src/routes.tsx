@@ -3,7 +3,7 @@ import {Home} from "./components/Home";
 import {Posts} from "./components/Posts";
 import * as React from "react";
 import {About} from "./components/About";
-import {RootNode} from "./generated/project_2610";
+import {RootNode} from "./generated/generated";
 
 type RoutesProps = {
     flags: RootNode

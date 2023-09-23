@@ -1,22 +1,20 @@
 import * as React from "react"
 import {Box, Center, Grid, Heading, List, ListItem, Link, Text, HStack} from "@chakra-ui/react"
-import {RootNode, BlogPostNode} from "../../generated/project_2610";
+import {RootNode, BlogPostNode} from "../../generated/generated";
 
 type PostsProps = {
     flags: RootNode
 }
 
 export function Posts({flags}: PostsProps) {
-    const allPosts = flags.posts({}).map((post, index) => (
-        <PostLink key={index} post={post}/>
-    ));
-
     return (
         <Center>
             <Grid>
                 <Heading as='h1' textAlign='left' mt={10} mb={5}>Posts</Heading>
                 <Box>
-                    <List>{allPosts}</List>
+                    <List>{flags.posts({}).map((post, index) => (
+                        <PostLink key={index} post={post}/>
+                    ))}</List>
                 </Box>
             </Grid>
         </Center>

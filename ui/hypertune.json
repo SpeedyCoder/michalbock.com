@@ -1,4 +1,6 @@
 {
   "projectId": 2610,
-  "token": "U2FsdGVkX1/0kAMlF/4a+ubcU1uRkx2uvJpAyC+OCwjnNTLp8zjb6m8PbHkyvvzd"
+  "includeToken": true,
+  "outputDirectoryPath": "src/generated/",
+  "token": "U2FsdGVkX1+MfLKMa4VZoozKphobwPCJ7AnUWwnD8BI="
 }

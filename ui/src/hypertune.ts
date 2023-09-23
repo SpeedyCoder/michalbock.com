@@ -1,5 +1,5 @@
-import {initializeHypertune} from "./generated/project_2610";
+import {initializeHypertune} from "./generated/generated";
 
-const hypertune = initializeHypertune({});
+const hypertune = initializeHypertune({}, {shouldListenForUpdates: true});
 
 export default hypertune;

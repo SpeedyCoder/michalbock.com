@@ -2,15 +2,18 @@ import React, { useEffect, useMemo } from "react";
 import hypertune from "./hypertune";
 
 export default function useHypertune() {
-    const [isInitialized, setIsInitialized] = React.useState<boolean>(
-        hypertune.isInitialized()
+    const [, setCommitHash] = React.useState(
+        hypertune.getCommitHash()
     );
 
     useEffect(() => {
-        hypertune.waitForInitialization().then(() => {
-            console.log();
-            setIsInitialized(true);
-        });
+        function listener(newCommitHash: string): void {
+            setCommitHash(newCommitHash);
+        }
+        hypertune.addUpdateListener(listener);
+        return () => {
+            hypertune.removeUpdateListener(listener);
+        }
     }, []);
 
     return useMemo(

@@ -1,6 +1,6 @@
 {
   "projectId": 2610,
   "includeToken": true,
-  "outputDirectoryPath": "src/generated/",
+  "outputFilePath": "src/generated/hypertune.ts",
   "token": "U2FsdGVkX1+MfLKMa4VZoozKphobwPCJ7AnUWwnD8BI="
 }

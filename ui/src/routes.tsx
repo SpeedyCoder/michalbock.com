@@ -3,7 +3,7 @@ import {Home} from "./components/Home";
 import {Posts} from "./components/Posts";
 import * as React from "react";
 import {About} from "./components/About";
-import {RootNode} from "./generated/generated";
+import {RootNode} from "./generated/hypertune";
 
 type RoutesProps = {
     flags: RootNode

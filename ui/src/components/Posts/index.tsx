@@ -1,6 +1,6 @@
 import * as React from "react"
 import {Box, Center, Grid, Heading, List, ListItem, Link, Text, HStack} from "@chakra-ui/react"
-import {RootNode, BlogPostNode} from "../../generated/generated";
+import {RootNode, BlogPostNode} from "../../generated/hypertune";
 
 type PostsProps = {
     flags: RootNode

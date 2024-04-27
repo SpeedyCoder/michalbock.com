@@ -1,13 +1,10 @@
 import * as React from "react"
-import {Box, Center, ChakraProvider, Grid, GridItem, Heading,} from "@chakra-ui/react"
+import {Box, ChakraProvider, Grid, GridItem, Heading,} from "@chakra-ui/react"
 import {Navigation} from "./components/Navigation"
 import {theme} from "./theme";
 import {Routes} from "./routes";
-import useHypertune from "./useHypertune";
 
 export function App(){
-    const flags = useHypertune();
-
     return (
         <ChakraProvider theme={theme}>
             <Box textAlign="center">
@@ -22,7 +19,7 @@ export function App(){
                         <Navigation/>
                     </GridItem>
                     <GridItem area={'main'}>
-                        <Routes flags={flags} />
+                        <Routes />
                     </GridItem>
                     <GridItem area={'footer'}>
                         <Heading as='h6' size='xs' color="grey.900">

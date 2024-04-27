@@ -1,19 +1,18 @@
 import * as React from "react"
 import {Box, Center, Grid, Heading, List, ListItem, Link, Text, HStack} from "@chakra-ui/react"
-import {RootNode, BlogPostNode} from "../../generated/hypertune";
+import {BlogPostNode} from "../../generated/hypertune";
+import useHypertune from "../../useHypertune";
 
-type PostsProps = {
-    flags: RootNode
-}
+export function Posts() {
+    const flags = useHypertune();
 
-export function Posts({flags}: PostsProps) {
     return (
         <Center>
             <Grid>
                 <Heading as='h1' textAlign='left' mt={10} mb={5}>Posts</Heading>
                 <Box>
-                    <List>{flags.posts({}).map((post, index) => (
-                        <PostLink key={index} post={post}/>
+                    <List>{flags.posts({}).map((postNode, index) => (
+                        <PostLink key={index} postNode={postNode}/>
                     ))}</List>
                 </Box>
             </Grid>
@@ -21,18 +20,15 @@ export function Posts({flags}: PostsProps) {
     )
 }
 
-type PostLinkProps = {
-    post: BlogPostNode
-}
-
-
-function PostLink({post}: PostLinkProps) {
+function PostLink({postNode}: {
+    postNode: BlogPostNode
+}) {
     return (
         <ListItem>
             <HStack justifyContent='space-between'>
-                <Text fontSize='xl'>{post.date({}).get('')}</Text>
-                <Link href={post.link({}).get('')} fontSize='xl'>
-                    <b>{post.text({}).get('')}</b>
+                <Text fontSize='xl'>{postNode.date({fallback: ''})}</Text>
+                <Link href={postNode.link({fallback: ''})} fontSize='xl'>
+                    <b>{postNode.text({fallback: ''})}</b>
                 </Link>
             </HStack>
         </ListItem>

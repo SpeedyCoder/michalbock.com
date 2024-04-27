@@ -3,17 +3,12 @@ import {Home} from "./components/Home";
 import {Posts} from "./components/Posts";
 import * as React from "react";
 import {About} from "./components/About";
-import {RootNode} from "./generated/hypertune";
 
-type RoutesProps = {
-    flags: RootNode
-}
-
-export function Routes({flags}: RoutesProps) {
+export function Routes() {
     return (
         <RouterRoutes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/posts" element={<Posts flags={flags} />}/>
+            <Route path="/posts" element={<Posts />}/>
             <Route path="/about" element={<About/>}/>
         </RouterRoutes>
     )

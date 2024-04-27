@@ -1,8 +1,5 @@
-import {initializeHypertune} from "./generated/hypertune";
+import {initHypertune} from "./generated/hypertune";
 
-const hypertune = initializeHypertune({}, {
-    shouldStartIntervals: true,
-    shouldListenForUpdates: true,
-});
+const hypertune = initHypertune();
 
 export default hypertune;

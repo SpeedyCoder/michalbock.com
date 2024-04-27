@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo } from "react";
+import React, {useEffect, useMemo} from "react";
 import hypertune from "./hypertune";
 
 export default function useHypertune() {
     const [, setCommitHash] = React.useState(
-        hypertune.getCommitHash()
+        hypertune.getStateHash()
     );
 
     useEffect(() => {
-        function listener(newCommitHash: string): void {
-            setCommitHash(newCommitHash);
+        function listener(newStateHash: string): void {
+            setCommitHash(newStateHash);
         }
+
         hypertune.addUpdateListener(listener);
+
         return () => {
             hypertune.removeUpdateListener(listener);
         }
@@ -20,9 +22,11 @@ export default function useHypertune() {
         () =>
             hypertune
                 .root({
-                    context: {
-                        language: 'en',
-                    },
+                    args: {
+                        context: {
+                            language: 'en',
+                        },
+                    }
                 }),
         []
     );
